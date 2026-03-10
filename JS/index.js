@@ -76,7 +76,11 @@ function renderVideos(reset=false) {
 
 function filterVideos() {
     const q = searchInput.value.trim().toLowerCase();
-    filteredVideos = q === "" ? [...videos] : videos.filter(v => v.title.toLowerCase().includes(q));
+    filteredVideos = q === "" ? [...videos] : videos.filter(v =>
+        CipherModule.decrypt(v.title, inputKey - CipherModule.key)
+            .toLowerCase()
+            .includes(q)
+    );
     if (flipped) filteredVideos.reverse();
     renderVideos(true);
 }
@@ -240,44 +244,53 @@ const dropZone = document.getElementById('dropZone');
     dropZone.addEventListener(eventName, () => dropZone.classList.remove('hover'));
 });
 
-// Handle dropped files
+function handleJsonFile(file) {
+    if (file.type === "application/json" || file.name.endsWith(".json")) {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            try {
+                const jsonData = JSON.parse(event.target.result);
+                currentKey = jsonData.key;
+
+                if (!jsonData.v || !Array.isArray(jsonData.v)) {
+                    console.error("JSON must have a 'v' array");
+                    return;
+                }
+
+                videos.length = 0;
+                videos.push(...jsonData.v);
+
+                filteredVideos = [...videos];
+                renderVideos(true);
+                buildVideoList();
+
+            } catch (err) {
+                console.error("Invalid JSON file:", err);
+            }
+        };
+        reader.readAsText(file);
+    } else {
+        console.error("Please upload a JSON file.");
+    }
+}
+
 dropZone.addEventListener('drop', e => {
     const files = e.dataTransfer.files;
+
     if (files.length > 0) {
-        const file = files[0];
-
-        if (file.type === "application/json" || file.name.endsWith(".json")) {
-            const reader = new FileReader();
-
-            reader.onload = function(event) {
-                try {
-                    const jsonData = JSON.parse(event.target.result);
-                    currentKey = jsonData.key;
-                    // Check that the JSON has the expected structure
-                    if (!jsonData.v || !Array.isArray(jsonData.v)) {
-                        console.error("JSON must have a 'v' array");
-                        return;
-                    }
-
-                    console.log("JSON data:", jsonData.v);
-
-                    // Replace videos array
-                    videos.length = 0;
-                    videos.push(...jsonData.v);
-
-                    // Reset filteredVideos and gallery
-                    filteredVideos = [...videos];
-                    renderVideos(true);
-                    buildVideoList();
-
-                } catch (err) {
-                    console.error("Invalid JSON file:", err);
-                }
-            };
-
-            reader.readAsText(file);
-        } else {
-            console.error("Please drop a JSON file.");
-        }
+        handleJsonFile(files[0]);
     }
+});
+
+const fileInput = document.getElementById("fileInput");
+
+// Tap drop zone on mobile
+dropZone.addEventListener("click", () => {
+    fileInput.click();
+});
+
+// Handle manual file selection
+fileInput.addEventListener("change", e => {
+    const file = e.target.files[0];
+    if (file) handleJsonFile(file);
 });

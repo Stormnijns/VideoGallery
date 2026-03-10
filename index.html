@@ -5,12 +5,14 @@
     <title>Gallery</title>
     <link rel="stylesheet" href="CSS/style.css">
     <script defer src="JS/index.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
 <body>
 
 <div id="protected">
-    <div id="dropZone">Drag & drop a JSON file here</div>
+    <div id="dropZone">Drop JSON here or tap to upload</div>
+    <input type="file" id="fileInput" accept=".json,application/json" hidden>
     <h1 class="main-title">Video Gallery</h1>
     <button id="flipBtn">Flip List</button>
     <div id="videoListContainer"><div id="videoList"></div></div>
