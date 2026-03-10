@@ -173,7 +173,7 @@ function buildImageList() {
     const addedTitles = new Set();
 
     images.forEach(i => {
-        if (addedTitles.has(i.title)) return; // skip duplicate
+        if (addedTitles.has(i.title)) return;
 
         addedTitles.add(i.title);
 
