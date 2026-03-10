@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Gallery</title>
+    <link rel="stylesheet" href="CSS/style.css">
+    <script defer src="JS/index.js"></script>
+</head>
+
+<body>
+
+<div id="protected">
+    <div id="dropZone">Drag & drop a JSON file here</div>
+    <h1 class="main-title">Video Gallery</h1>
+    <button id="flipBtn">Flip List</button>
+    <div id="videoListContainer"><div id="videoList"></div></div>
+    <input id="searchInput" type="text" placeholder="Search by title and press Enter..."
+           style="margin-bottom:20px;padding:10px;width:80%;max-width:400px;font-size:16px;border-radius:8px;border:1px solid #ccc;" />
+    <div class="gallery" id="gallery"></div>
+    <button id="showMoreBtn" style="margin:20px;padding:10px 20px;font-size:16px;">Show more</button>
+    <hr style="margin:40px 0;">
+    <h1 class="main-title">Image Album</h1>
+    <button id="flipImgBtn">Flip Image List</button>
+    <div id="imageListContainer"><div id="imageList"></div></div>
+    <input id="searchImgInput" type="text" placeholder="Search images and press Enter..."
+           style="margin-bottom:20px;padding:10px;width:80%;max-width:400px;font-size:16px;border-radius:8px;border:1px solid #ccc;" />
+    <div class="gallery" id="imgGallery"></div>
+    <button id="showMoreImgBtn" style="margin:20px;padding:10px 20px;font-size:16px;">Show more images</button>
+
+    <!-- LIGHTBOX (iframe version) -->
+    <div id="lightboxOverlay">
+        <iframe id="lightboxFrame" src="" allowfullscreen></iframe>
+    </div>
+</div>
+
+<div id="denied">
+    <h1>Access Denied</h1>
+    <p>Please close this page and try again.</p>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,103 @@
+* {
+    /*
+    padding: 0;
+    margin: 0;
+    */
+    box-sizing: border-box;
+}
+
+body { font-family:Arial; background:#111215; padding:20px; text-align:center; }
+
+.gallery {
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    gap:20px;
+    max-width:1000px;
+    margin:auto;
+}
+
+.video-container {
+    background:#1f2023;
+    padding:10px;
+    border-radius:10px;
+    box-shadow:0 4px 6px rgba(0,0,0,0.1);
+    h3 { color:white }
+}
+
+iframe { width:100%; height:300px; border:none; }
+
+.main-title { color: white }
+
+#videoListContainer, #imageListContainer {
+    display:flex; justify-content:center; margin-bottom:20px;
+}
+
+#videoList, #imageList {
+    display:flex; flex-direction:column; overflow-y:auto;
+    max-height:150px; width:250px; padding:10px;
+    background:white; border-radius:10px; box-shadow:0 4px 6px rgba(0,0,0,0.1);
+}
+
+#videoList button, #imageList button {
+    padding:8px; margin-bottom:6px; border:none; border-radius:8px;
+    background:#eee; cursor:pointer; text-align:left;
+}
+
+#videoList button:hover, #imageList button:hover { background:#ccc; }
+
+.iframeWrapper {
+    position:relative;
+    width:100%;
+    padding-bottom:66%;
+    border-radius:10px;
+    overflow:hidden;
+}
+.imageFrame {
+    position:absolute; top:0; left:0;
+    width:100%; height:100%;
+    border:none;
+}
+.iframeClickLayer {
+    position:absolute; top:0; left:0;
+    width:100%; height:100%;
+    cursor:pointer;
+    background:rgba(0,0,0,0);
+}
+
+#lightboxOverlay {
+    position:fixed;
+    top:0; left:0; right:0; bottom:0;
+    background:rgba(0,0,0,0.85);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    z-index:9999;
+}
+#lightboxFrame {
+    width:90%;
+    height:90%;
+    border:none;
+    border-radius:10px;
+    box-shadow:0 0 20px black;
+}
+
+#protected { display:none; }
+#denied { color:#900; }
+
+#dropZone {
+    width: 300px;
+    height: 200px;
+    border: 3px dashed #666;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+    font-family: sans-serif;
+    margin: 50px auto;
+    text-align: center;
+}
+#dropZone.hover {
+    border-color: #0b79d0;
+    color: #0b79d0;
+    background-color: #f0f8ff;
+}
